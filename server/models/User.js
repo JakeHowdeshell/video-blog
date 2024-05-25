@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcrypt");
 const Upload = require("./Upload");
+const Comment = require("./Comment");
 
 const userSchema = new Schema({
   firstName: {
@@ -30,7 +31,18 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-  uploads: [Upload.schema],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "comment",
+    },
+  ],
+  uploads: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "upload",
+    },
+  ],
 });
 
 // set up pre-save middleware to create password
