@@ -1,5 +1,19 @@
 const { User, Upload } = require('../models');
 const { signToken, AuthenticationError } = require("../utils/auth");
+const multer = require("multer");
+// =========== Multer Middlewear ===========
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/assets/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const video = multer({
+  storage: storage,
+}).single("mypic");
 
 const resolvers = {
     Query: {
@@ -15,7 +29,34 @@ const resolvers = {
             }
             throw AuthenticationError;
           },
-        //   upload: async () => {
+        //   upload: async () => {async (req, res) => {
+//   video(req, res, async (err) => {
+//     console.log(req.body.mypic);
+//     try {
+//       const { product_name, price, url, stock, category_id } = req.body;
+
+//       if (!product_name) {
+//         return res.status(400).json({ error: "Product name is required" });
+//       }
+
+//       const newProduct = await Product.create({
+//         product_name,
+//         price,
+//         url,
+//         stock,
+//         category_id,
+//       });
+//       res.status(201).json(newProduct);
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).json(err);
+//     }
+//     if (err instanceof multer.MulterError) {
+//       console.error(err);
+//     } else if (err) {
+//       console.error(err);
+//     }
+//   });
 
         //   }
       },
