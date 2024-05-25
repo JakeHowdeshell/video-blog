@@ -6,10 +6,10 @@ const resolvers = {
         user: async (parent, args, context) => {
             if (context.user) {
               const user = await User.findById(context.user._id).populate({
-                path: "orders.meals",
-                populate: "category",
+                // path: "orders.meals",
+                // populate: "category",
               });
-              user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+            //   user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
       
               return user;
             }
