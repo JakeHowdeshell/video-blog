@@ -1,9 +1,58 @@
-// const { Profile } = require('../models');
+const { User, Upload } = require('../models');
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
     Query: {
-        hello: () => 'Hello, world!',
+        user: async (parent, args, context) => {
+            if (context.user) {
+              const user = await User.findById(context.user._id).populate({
+                path: "orders.meals",
+                populate: "category",
+              });
+              user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+      
+              return user;
+            }
+            throw AuthenticationError;
+          },
+        //   upload: async () => {
+
+        //   }
       },
+      Mutation: {
+        addUser: async (parent, args) => {
+          const user = await User.create(args);
+          const token = signToken(user);
+    
+          return { token, user };
+        },
+        updateUser: async (parent, args, context) => {
+            if (context.user) {
+              return await User.findByIdAndUpdate(context.user._id, args, {
+                new: true,
+              });
+            }
+      
+            throw AuthenticationError;
+          },
+          login: async (parent, { email, password }) => {
+            const user = await User.findOne({ email });
+      
+            if (!user) {
+              throw AuthenticationError;
+            }
+      
+            const correctPw = await user.isCorrectPassword(password);
+      
+            if (!correctPw) {
+              throw AuthenticationError;
+            }
+      
+            const token = signToken(user);
+      
+            return { token, user };
+          },
+    }
 };
 
 module.exports = resolvers;
