@@ -43,11 +43,11 @@ const uploadSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
+//   user: {
+//     type: Schema.Types.ObjectId,
+//     ref: 'User',
+//     required: true,
+//   },
 });
 
 uploadSchema.pre("save", function (next) {

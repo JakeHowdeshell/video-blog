@@ -23,13 +23,11 @@ const typeDefs = `
         size: String
         format: String
         uploadDate: String
-        user: User
         comments: [Comment]
       }
       type Comment {
         _id: ID
         content: String
-        user: User
         createdAt: String
         updatedAt: String
       }
