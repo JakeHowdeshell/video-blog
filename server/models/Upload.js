@@ -43,10 +43,10 @@ const uploadSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  uploader: {
-    type: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
-    trim: true,
   },
 });
 

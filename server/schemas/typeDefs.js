@@ -23,7 +23,7 @@ const typeDefs = `
         size: String
         format: String
         uploadDate: String
-        uploader: String
+        user: User
         comments: [Comment]
       }
       type Comment {
@@ -36,7 +36,6 @@ const typeDefs = `
       type Query {
         user: User
         uploads: [Upload]
-
       }
     
       type Mutation {

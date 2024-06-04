@@ -29,7 +29,7 @@ const resolvers = {
       throw AuthenticationError;
     },
     uploads: async () => {
-      return Upload.find().populate("uploader").populate("comments");
+      return Upload.find().populate("user").populate("comments");
     },
   },
 
