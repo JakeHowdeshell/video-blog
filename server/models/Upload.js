@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Comment = require("./Comment");
+const Comment = require('./Comment');
 
 const { Schema } = mongoose;
 
@@ -13,12 +13,7 @@ const uploadSchema = new Schema({
     type: Number,
     default: 0,
   },
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "comment",
-    },
-  ],
+  comments: [Comment.schema],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -43,18 +38,18 @@ const uploadSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-//   user: {
-//     type: Schema.Types.ObjectId,
-//     ref: 'User',
-//     required: true,
-//   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
-uploadSchema.pre("save", function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
+uploadSchema.pre('save', function(next) {
+    this.updatedAt = Date.now();
+    next();
+  });
 
-const Upload = mongoose.model("Upload", uploadSchema);
+const Upload = mongoose.model("Uploads", uploadSchema);
 
 module.exports = Upload;

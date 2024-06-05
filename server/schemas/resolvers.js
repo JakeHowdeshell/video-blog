@@ -22,7 +22,6 @@ const resolvers = {
         const user = await User.findById(context.user._id)
           .populate("uploads")
           .populate("comments");
-        //   user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
 
         return user;
       }
@@ -30,6 +29,7 @@ const resolvers = {
     },
     uploads: async () => {
       return Upload.find().populate("user").populate("comments");
+      
     },
   },
 
